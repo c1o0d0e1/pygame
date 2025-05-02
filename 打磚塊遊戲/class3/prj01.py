@@ -1,6 +1,7 @@
 ######################匯入模組######################
 import pygame
 import sys
+import random
 
 ######################初始化######################
 pygame.init()  # 啟動pygame
@@ -15,7 +16,8 @@ pygame.display.set_caption("my game")  # 設定視窗標題
 # 建立畫布
 bg = pygame.Surface((width, height))  # 建立畫布
 # 畫布為白色
-bg.fill((255, 255, 255))  # 畫布為白色
+bg.fill((255, 255, 255))
+# 畫布為白色
 ######################繪製圖形######################
 # 畫圓形 (畫布, 顏色, 圓心座標, 半徑)
 pygame.draw.circle(bg, (0, 0, 255), (200, 100), 30, 0)  # 畫圓形
@@ -34,7 +36,11 @@ pygame.draw.line(bg, (255, 0, 255), (280, 220), (320, 220), 3)  # 畫線
 # pygame.draw.arc(bg, (255, 10, 0), [100, 100, 100, 50], math.radians(180), math.radians(0), 5)  # 畫弧
 ######################循環偵測######################
 paint = False  # 畫圖狀態
-color = (0, 255, 255)  # 畫圖顏色 (R, G, B)
+color = (
+    random.randint(0, 255),
+    random.randint(0, 255),
+    random.randint(0, 255),
+)  # 畫圖顏色 (R, G, B)
 while True:  # 無限迴圈
     x, y = pygame.mouse.get_pos()  # 取得滑鼠座標
     for event in pygame.event.get():  # 取得事件
@@ -46,6 +52,15 @@ while True:  # 無限迴圈
             print(f"滑鼠座標: {x}, {y}")  # 印出滑鼠座標
             paint = not (paint)  ## 切換畫圖狀態
 
+        if paint == False or paint == True:  # 如果畫圖狀態是False或True
+            # 隨機顏色
+            color = (
+                random.randint(0, 255),
+                random.randint(0, 255),
+                random.randint(0, 255),
+            )
+            # 畫圖顏色 (R, G, B)
+            # 隨機顏色
         if paint:  # 繪圖狀態 (切換畫圖狀態)
             pygame.draw.circle(bg, color, (x, y), 10, 0)  # 跟隨滑鼠位置畫圓
     # 畫布顯示在視窗左上角
