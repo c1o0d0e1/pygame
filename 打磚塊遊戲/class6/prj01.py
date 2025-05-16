@@ -353,10 +353,14 @@ while True:  # 無限迴圈
                             shake_frames = 20
                             victory = True
                         else:
+                            bomb_score = 0
                             for rr, cc in bomb.affected:
                                 idx2 = cc * bricks_row + rr
                                 if 0 <= idx2 < len(bricks):
-                                    bricks[idx2].hit = True
+                                    if not bricks[idx2].hit:
+                                        bricks[idx2].hit = True
+                                        bomb_score += 1
+                            score += bomb_score  # 炸彈爆炸加分
                             bomb.visible = False
                             bx, by = bomb.get_center()
                             explosions.append(
@@ -387,13 +391,15 @@ while True:  # 無限迴圈
                         ball.speed_x = -ball.speed_x
                     else:
                         ball.speed_y = -ball.speed_y
+        # 更新分數
         score += hit_count
         ball.check_collision(bg_x, bg_y, bricks, pad)
-        if not ball.is_moving and not victory:
+        if not ball.is_moving and not victory and score != 99:
             lives -= 1
             if lives <= 0:
                 game_over = True
-
+        elif score == len(bricks):  # 如果所有磚塊都被擊中 99
+            victory = True
     for event in pygame.event.get():  # 取得事件
         if event.type == pygame.QUIT:  # 如果事件是關閉視窗 (X)
             sys.exit()  # 結束程式
@@ -444,9 +450,12 @@ while True:  # 無限迴圈
     # 顯示遊戲結束
     if game_over:
         over_text = font.render("遊戲結束", True, (255, 0, 0))
-        screen.blit(over_text, (bg_x // 2 - 100, bg_y // 2 - 32))
+        over_text2 = font.render("哈哈哈哈哈!", True, (255, 0, 0))
+        screen.blit(over_text, (bg_x // 2 - 100 + 20, bg_y // 2 - 32))
+        screen.blit(over_text2, (bg_x // 2 - 100, bg_y // 2 + 32))
     # 顯示勝利
     if victory:
-        victory_text = font.render("勝利!", True, (0, 255, 0))
-        screen.blit(victory_text, (bg_x // 2 - 100, bg_y // 2 - 32))
+        score = 99
+        victory_text = font.render("勝利!", True, (255, 215, 0))  # 金色
+        screen.blit(victory_text, (bg_x // 2 - 100 + 50, bg_y // 2 - 32))
     pygame.display.update()
