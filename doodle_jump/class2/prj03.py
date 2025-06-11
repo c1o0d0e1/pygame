@@ -10,7 +10,7 @@ FPS = pygame.time.Clock()  # 設定FPS物件，控制遊戲更新速度
 bg_x = 400  # 視窗寬度
 bg_y = 600  # 視窗高度
 bg_size = (bg_x, bg_y)
-pygame.display.set_caption("Doodle Jump - 步驟1")  # 設定視窗標題
+pygame.display.set_caption("Doodle Jump - 步驟3")  # 設定視窗標題
 screen = pygame.display.set_mode(bg_size)  # 建立視窗
 
 
@@ -54,6 +54,26 @@ class Player:
             self.x = -self.width
 
 
+###################### 平台類別 ######################
+class Platform:
+    def __init__(self, x, y, width, height, color):
+        """
+        初始化平台
+        x, y: 平台左上角座標
+        width, height: 平台寬高
+        color: 平台顏色
+        """
+        self.rect = pygame.Rect(x, y, width, height)  # 平台的矩形範圍
+        self.color = color  # 平台顏色
+
+    def draw(self, display_area):
+        """
+        在指定畫布上繪製平台
+        display_area: pygame畫布
+        """
+        pygame.draw.rect(display_area, self.color, self.rect)
+
+
 ###################### 主角設定 ######################
 player_w = 30  # 主角寬度
 player_h = 30  # 主角高度
@@ -63,6 +83,15 @@ player_x = bg_x // 2 - player_w // 2
 player_y = bg_y - player_h - 50
 # 建立主角物件
 player = Player(player_x, player_y, player_w, player_h, player_color)
+
+###################### 平台設定 ######################
+platform_w = 60  # 平台寬度
+platform_h = 10  # 平台高度
+platform_x = (bg_x - platform_w) // 2  # 平台水平置中
+platform_y = bg_y - platform_h - 10  # 平台放在視窗底部上方10像素
+platform_color = (255, 255, 255)  # 平台顏色(白色)
+# 建立平台物件
+platform = Platform(platform_x, platform_y, platform_w, platform_h, platform_color)
 
 ###################### 主程式 ######################
 while True:
@@ -84,5 +113,7 @@ while True:
     screen.fill((0, 0, 0))  # 填滿黑色背景
     # 呼叫主角的draw方法繪製主角
     player.draw(screen)
+    # 呼叫平台的draw方法繪製平台
+    platform.draw(screen)
 
     pygame.display.update()  # 更新畫面
