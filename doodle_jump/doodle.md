@@ -177,3 +177,14 @@
   - "player_right_jumping": os.path.join("image", "r.png"), # 右跳躍
   - "player_right_falling": os.path.join("image", "rs.png"), # 右下落
 - 接著在新增一個字典 sprites，裡面會放已經處理好的圖片，玩家圖片要做 convert_alpha 處理，其他要裁減的圖片就用 source_image.subsurface 進行裁切處理，這個字典的 key 會跟 sprite_data 的 key 相同，製作好 sprites 之後就可以 return 出去
+
+### 步驟 12: 載入玩家精靈圖片
+
+- 將載入的圖片放進 sprites 這個變數裡。
+- 在 Player 類別中新增 `load_sprites(self)` 方法：
+  - 使用 `pygame.image.load()` 載入玩家圖片，並使用 `convert_alpha()` 進行轉換。
+  - 根據 `sprite_data` 字典中的座標與尺寸，使用 `subsurface()` 方法裁切出各個動作的圖片。
+  - 將裁切後的圖片存入 `self.sprites` 字典中。
+- 如果找不到對應的精靈圖片或沒有載入精靈圖片，則使用預設的玩家圖片。
+- 將主角的寬度/高度改為 50x50 像素，平台的寬度/高度改為 80x20 像素，彈簧的寬度/高度改為 35x20 像素，並使用載入的精靈圖片進行繪製。
+- 將背景設為白色，並且將文字設為黑色。
