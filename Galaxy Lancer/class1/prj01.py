@@ -22,38 +22,33 @@ bg_img = bg_img_raw.convert()
 
 
 ###################### 主程式 ######################
-def main():
-    # 背景初始y座標(從底部開始)
-    bg_y1 = 0
-    bg_y2 = -WIN_HEIGHT
-    running = True
-    while running:
-        FPS.tick(60)  # 每秒最多更新60次
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            # 按下(X)鍵結束遊戲
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_x:
-                    running = False
-        # 填滿黑色背景
-        screen.fill((0, 0, 0))
-        # 顯示並滾動背景圖片(往上移動)
-        bg_y1 += 10  # 每次往下移動10像素(視覺上背景往上，fps=60)
-        bg_y2 += 10
-        # 當一張背景完全移出視窗，重設其y座標到另一張之上
-        if bg_y1 >= WIN_HEIGHT:
-            bg_y1 = bg_y2 - WIN_HEIGHT
-        if bg_y2 >= WIN_HEIGHT:
-            bg_y2 = bg_y1 - WIN_HEIGHT
-        # 繪製兩張背景圖片，產生無縫滾動效果
-        screen.blit(bg_img, (0, bg_y1))
-        screen.blit(bg_img, (0, bg_y2))
-        pygame.display.update()  # 更新畫面
-    pygame.quit()
-    sys.exit()
-
-
-if __name__ == "__main__":
-    main()
+# 背景初始y座標(從底部開始)
+bg_y1 = 0
+bg_y2 = -WIN_HEIGHT
+running = True
+while running:
+    FPS.tick(60)  # 每秒最多更新60次
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        # 按下(X)鍵結束遊戲
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_x:
+                running = False
+    # 填滿黑色背景
+    screen.fill((0, 0, 0))
+    # 顯示並滾動背景圖片(往上移動)
+    bg_y1 += 10  # 每次往下移動10像素(視覺上背景往上，fps=60)
+    bg_y2 += 10
+    # 當一張背景完全移出視窗，重設其y座標到另一張之上
+    if bg_y1 >= WIN_HEIGHT:
+        bg_y1 = bg_y2 - WIN_HEIGHT
+    if bg_y2 >= WIN_HEIGHT:
+        bg_y2 = bg_y1 - WIN_HEIGHT
+    # 繪製兩張背景圖片，產生無縫滾動效果
+    screen.blit(bg_img, (0, bg_y1))
+    screen.blit(bg_img, (0, bg_y2))
+    pygame.display.update()  # 更新畫面
+pygame.quit()
+sys.exit()
